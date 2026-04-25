@@ -33,6 +33,9 @@ omo插件是基于opencode中的plugin 包对外的接口（ref/opencode/package
 
 
 
+
+
+
 # 代码实现要求
 
 - 常量必须存放constant 下，严禁直接照搬omo代码 大量的常量 字符串 散落各处
@@ -83,7 +86,90 @@ effort: "high"  // variant
 - system reminder作为一个独立的系统，其触发只会在发送用户消息，和工具执行完之后，作为附加消息的添加上，现有的omo实现是各个子组件自行添加（ 例如 /usr2/better_omo/ref/oh-my-opencode/src/hooks/agent-usage-reminder/index.ts 里的   output.output += REMINDER_MESSAGE; )  单独设计一个reminder系统，新增reminder 只需要在这个系统里新增一个触发函数即可
 
 
+
+
+
+
+
 # 重构 detail
+
+## 新的目录结构
+
+-- config 
+    -若干schema
+
+-- agent（ 插件自带 agent)
+    - schema.ts
+    --- clawcoder
+    --  autose
+-- tool ( 插件自带工具)
+    -- 
+
+-- system-reminder ( 定义各种不同的reminder触发机制，复用 context-injector)
+
+
+-- utlis
+    -- skill-loader 
+    -- command-loader
+    -- tmux-manager ( 合并src/features/tmux-subagent/manager.ts 和  shared/tmux 内容)
+
+
+
+## config 重构
+
+
+
+1， BtOmoConfig 允许用户自行配置的字段
+
+- provider 
+- 模型配置
+
+- 环境变量配置
+- 
+
+1. opencode plugin里的类型， 后续所有的都从这里导入（ 防止opencode plugin版本更新导致霰弹修改）
+
+
+
+导入类型，不要类型到处都是 : opencode-plugin-type.ts ( 后续统一从这里导入)
+
+- hook名称
+- 消息类型  Message :  Info { role, sessionId } ； Parts : [Part] 
+- 导入类型
+
+定义统一的获取方法
+
+
+
+
+## agent 系统
+
+添加一个新的默认的agent
+
+claude-code, 在此模式下其system reminder会与cc一致
+
+同时补充cc的team机制，memory机制
+
+
+子agent保留
+
+explore
+
+
+## 内置skill
+
+-  
+
+
+## slash 斜杠命令系统
+
+/role 添加 
+/btw 添加
+
+
+
+
+
 
 ## 机制新增
 
@@ -119,6 +205,19 @@ effort: "high"  // variant
 - 移除call_omo_agent 
 - 移除websearch等web类工具
 
+保留
+
+- bash执行时候检测 终端（unix, cmd,ps） 并执行命令的路径检测 shellEscape  
+
+
+## system reminder 机制
+
+- bash工具
+  - 失败时候或返回为空 提醒当前bash版本
+  - cp 命令，mkdir等等命令的操作
+  - 危险命令的再三确认 
+
+ 
 
 ##  "chat.message" 收到新用户消息时，消息入队前 
 
