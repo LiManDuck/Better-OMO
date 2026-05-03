@@ -70,7 +70,8 @@
   - [ ] 移除模型特定逻辑 (gemini/claude)
 
 ### 2.4 System Reminder 系统
-- [ ] 创建独立的 system-reminder 模块
+- [ ] 创建独立的 system-reminder 模块 作为一个文件夹
+  - [ ] 所有的reminder进行机制切换
   - [ ] 设计统一触发机制
   - [ ] 实现 reminder 注册系统
   - [ ] bash 工具提醒
