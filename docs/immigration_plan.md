@@ -1,0 +1,166 @@
+# Better-OMO 开发计划
+
+## 当前状态：初始化阶段
+
+## 第一阶段：项目基础搭建
+
+### 1.1 项目初始化
+- [ ] 创建基础目录结构
+  - [ ] config/
+  - [ ] agent/
+  - [ ] tool/
+  - [ ] system-reminder/
+  - [ ] utils/
+  - [ ] constants/
+  - [ ] types/
+- [ ] 初始化 package.json
+- [ ] 配置 TypeScript (tsconfig.json)
+- [ ] 配置构建脚本
+
+### 1.2 类型系统重构
+- [ ] 创建 types/opencode-plugin-type.ts
+  - [ ] 从 @opencode-ai/plugin 导出所有必要类型
+  - [ ] 定义统一的类型导出接口
+- [ ] 创建 constants/index.ts
+  - [ ] 整合所有 hook 名称常量
+  - [ ] 整合事件类型常量
+  - [ ] 整合消息类型常量
+
+### 1.3 配置系统
+- [ ] 创建 config/schema.ts
+  - [ ] 定义 BtOmoConfig 接口
+  - [ ] 支持用户自定义配置字段
+- [ ] 实现配置加载逻辑
+- [ ] 支持从 ~/.config/opencode/bt-omo.json 读取配置
+
+## 第二阶段：核心功能迁移
+
+### 2.1 Agent 系统
+- [ ] 创建 agent/schema.ts
+  - [ ] 定义 agent 接口规范
+- [ ] 迁移 explore agent (只读权限)
+- [ ] 迁移 general agent (全能力)
+- [ ] 迁移 look-at agent (多模态)
+- [ ] 新增 claude-code agent
+  - [ ] 实现 CC 兼容的 system reminder
+  - [ ] 实现 team 机制
+  - [ ] 实现 memory 机制
+- [ ] 新增 clawcoder agent
+- [ ] 新增 autose agent
+- [ ] 主 agent 提示词设置 (临时: "you are bt-omo, a good code agent")
+
+### 2.2 Tool 系统
+- [ ] 迁移 slashcommand 工具
+- [ ] 迁移 delegate_task 工具
+  - [ ] 新增 fork 参数 (默认 true)
+  - [ ] 保留 category 机制
+- [ ] 移除 call_omo_agent
+- [ ] 移除 websearch 等 web 类工具
+- [ ] 保留 bash 工具
+  - [ ] 终端检测 (unix/cmd/ps)
+  - [ ] 路径检测
+  - [ ] shellEscape 功能
+
+### 2.3 Hook 系统
+- [ ] 迁移并精简 hooks
+  - [ ] 保留 anthropic-context-window-limit-recovery
+  - [ ] 保留 autoslashcommand
+  - [ ] 移除 sisyphus 等多 agent 编排相关 hooks
+  - [ ] 移除 Claude Code 检测 hook
+  - [ ] 移除模型特定逻辑 (gemini/claude)
+
+### 2.4 System Reminder 系统
+- [ ] 创建独立的 system-reminder 模块
+  - [ ] 设计统一触发机制
+  - [ ] 实现 reminder 注册系统
+  - [ ] bash 工具提醒
+    - [ ] 失败/空返回时提醒 bash 版本
+    - [ ] cp/mkdir 等命令操作提醒
+    - [ ] 危险命令确认
+- [ ] 在消息入队前注入
+- [ ] 在工具执行后注入
+
+## 第三阶段：高级功能
+
+### 3.1 并发控制
+- [ ] 迁移 ConcurrencyManager
+  - [ ] 三级粒度并发控制
+- [ ] 迁移任务难度路由机制
+
+### 3.2 Background Manager
+- [ ] 迁移 background manager 系统
+
+### 3.3 TMUX 系统
+- [ ] 创建 utils/tmux-manager.ts
+  - [ ] 合并 src/features/tmux-subagent/manager.ts
+  - [ ] 合并 shared/tmux 内容
+- [ ] 会话创建时启动 tmux
+- [ ] 会话删除时清理资源
+
+### 3.4 事件处理
+- [ ] session.error 事件处理
+  - [ ] 可恢复类型的会话恢复
+- [ ] message.updated 事件处理
+  - [ ] 更新 session agent 名称
+- [ ] session.deleted 事件处理
+  - [ ] 清空资源
+- [ ] session.created 事件处理
+  - [ ] 启动 tmux
+  - [ ] 记录父会话 ID
+
+### 3.5 Slash 命令
+- [ ] 实现 /role 命令
+- [ ] 实现 /btw 命令
+
+### 3.6 Skill 和 MCP
+- [ ] 迁移 skill 系统保持不变
+- [ ] 迁移 MCP 功能保持不变
+- [ ] 创建 utils/skill-loader.ts
+- [ ] 创建 utils/command-loader.ts
+
+## 第四阶段：集成和测试
+
+### 4.1 主入口
+- [ ] 创建 src/index.ts
+  - [ ] 整合所有 hooks
+  - [ ] 整合所有 agents
+  - [ ] 整合所有 tools
+  - [ ] 配置事件监听器
+- [ ] 创建 plugin-config.ts
+
+### 4.2 构建和打包
+- [ ] 配置构建脚本
+- [ ] 生成 schema.json
+- [ ] 测试构建产物
+
+### 4.3 测试
+- [ ] 单元测试
+- [ ] 集成测试
+- [ ] 功能验证
+
+## 第五阶段：文档和收尾
+
+### 5.1 文档
+- [ ] 编写 README.md
+- [ ] 编写配置说明文档
+- [ ] 编写开发文档
+
+### 5.2 最后检查
+- [ ] 代码审查
+- [ ] 性能优化
+- [ ] 安全检查
+
+## 进度追踪
+
+- 开始时间: 2026-05-03
+- 当前阶段: 第一阶段 - 项目基础搭建
+- 完成百分比: 0%
+
+## 注意事项
+
+1. 所有 commit 格式: "cc : <实际信息>"
+2. 定期 git push
+3. 常量必须集中在 constants/
+4. 类型必须从 types/opencode-plugin-type.ts 导入
+5. 保持代码可扩展性
+6. 优先完成核心逻辑

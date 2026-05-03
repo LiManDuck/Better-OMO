@@ -10,6 +10,8 @@ omo插件是基于opencode中的plugin 包对外的接口（ref/opencode/package
 你的任务是合作基于此omo插件  实现 定制版的插件逻辑 遵循我的需求 , 最终名为 better_omo 插件   也就是本目录下的项目
 # 你的要求
 
+- 你可以查看skill下的 opencode hook guider ，也可以直接查看ref/opencode/packages/plugin 的包 ，进行确认plugin里包含的接口的形状 不要猜测接口形状
+- 最终成品是一个类似oh-my-opencode的一个完整的ts项目, ref目录不参与git 
 - 遵循我的指令，一直往下执行，从信息收集，方案思考到代码编写，编译验证 无需向我询问 ，除非你认为完全不可行
 
 
@@ -31,18 +33,12 @@ omo插件是基于opencode中的plugin 包对外的接口（ref/opencode/package
 
 
 
-
-
-
-
-
 # 代码实现要求
 
 - 常量必须存放constant 下，严禁直接照搬omo代码 大量的常量 字符串 散落各处
-- 各种类型定义不要向 原有的omo项目四处都有定义
-- 保留一份原始的定义，例如OriginalMessageContext ,MessageMetadata 应该放在constants 或者 config目录下，而不是放在具体的特性实现目录中
+- 代码的架构设计你可以参考oh-my-opencode的源码 
 - 保证可扩展性 , 原有omo的优秀设计保留; 重构其常量，类型定义四处漂移的部分； 删除其多agent编排逻辑 ，其余不变
-
+- 定时进行commit 和 git push( 直接push即可，不用设置分支 )
 
 
 # 功能要求
@@ -56,13 +52,8 @@ omo插件是基于opencode中的plugin 包对外的接口（ref/opencode/package
 - 在~/.config/opencode下支持本插件的配置, 记为 bt-omo.json文件 
 - 如若遇到上述没提到的功能要求, 则一律视为保留原有omo的能力 
 - 移除所有的与特定模型强绑定的逻辑，例如gemini， 例如claude 
+- 新增两个agent, clawcoder和autose,
 
-
-# 合作机制（ 你和我） 
-
-对于你的工作 , 如果我做出修改的指令， 我会在相应的位置 打上 //todo 标记，基于我的指示在相应部分完成代码重写
-
-我只会在你完成任务时检查代码,
 
 # Attention
 
