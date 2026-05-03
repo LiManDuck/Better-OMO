@@ -89,13 +89,13 @@
 
 ## 第三阶段：高级功能
 
-### 3.1 并发控制
-- [ ] 迁移 ConcurrencyManager
-  - [ ] 三级粒度并发控制
+### 3.1 并发控制 ✅
+- [x] 迁移 ConcurrencyManager
+  - [x] 三级粒度并发控制
 - [ ] 迁移任务难度路由机制
 
 ### 3.2 Background Manager
-- [ ] 迁移 background manager 系统
+- [ ] 迁移 background manager 系统（简化版）
 
 ### 3.3 TMUX 系统 ✅
 - [x] 创建 utils/tmux-manager.ts
@@ -158,7 +158,7 @@
 
 - 开始时间: 2026-05-03
 - 当前阶段: 第三阶段 - 高级功能
-- 完成百分比: 40%
+- 完成百分比: 50%
 
 ## 已完成
 - ✅ 项目基础搭建
@@ -167,13 +167,13 @@
 - ✅ Hook 系统 (context recovery, auto slash command)
 - ✅ System Reminder 系统
 - ✅ TMUX 系统 (session manager, event handling)
+- ✅ 并发控制系统 (ConcurrencyManager with three-level granularity)
 - ✅ 项目编译通过
 
 ## 下一步任务
-1. 并发控制迁移
-2. Background Manager 迁移
-3. 事件处理完善
-4. Slash命令实现
+1. Background Manager 迁移
+2. 事件处理完善
+3. Slash命令实现
 
 ## 注意事项
 
