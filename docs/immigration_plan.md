@@ -1,8 +1,8 @@
 # Better-OMO 开发计划
 
-## 当前状态：初始化阶段
+## 当前状态：核心功能开发中 (40%完成)
 
-## 第一阶段：项目基础搭建
+## 第一阶段：项目基础搭建 ✅
 
 ### 1.1 项目初始化
 - [x] 创建基础目录结构
@@ -13,6 +13,7 @@
   - [x] utils/
   - [x] constants/
   - [x] types/
+  - [x] hooks/
 - [x] 初始化 package.json
 - [x] 配置 TypeScript (tsconfig.json)
 - [x] 配置构建脚本
@@ -33,9 +34,9 @@
 - [x] 实现配置加载逻辑
 - [x] 支持从 ~/.config/opencode/bt-omo.json 读取配置
 
-## 第二阶段：核心功能迁移
+## 第二阶段：核心功能迁移 ✅
 
-### 2.1 Agent 系统
+### 2.1 Agent 系统 ✅
 - [x] 创建 agent/schema.ts
   - [x] 定义 agent 接口规范
 - [x] 迁移 explore agent (只读权限)
@@ -48,44 +49,43 @@
 - [x] 新增 clawcoder agent
 - [x] 新增 autose agent
 - [x] 主 agent 提示词设置 (临时: "you are bt-omo, a good code agent")
+- [x] 实现 discoverAgents 函数
 
-### 2.2 Tool 系统
-- [ ] 迁移 slashcommand 工具
-- [ ] 迁移 delegate_task 工具
-  - [ ] 新增 fork 参数 (默认 true)
-  - [ ] 保留 category 机制
-- [ ] 移除 call_omo_agent
-- [ ] 移除 websearch 等 web 类工具
-- [ ] 保留 bash 工具
-  - [ ] 终端检测 (unix/cmd/ps)
-  - [ ] 路径检测
-  - [ ] shellEscape 功能
+### 2.2 Tool 系统 ✅
+- [x] 迁移 slashcommand 工具
+- [x] 迁移 delegate_task 工具
+  - [x] 新增 fork 参数 (默认 true)
+  - [x] 保留 category 机制
+  - [x] 修复为符合SDK API规范（session.create只接受body/query）
+- [x] 移除 call_omo_agent
+- [x] 移除 websearch 等 web 类工具
+- [x] 使用 tool.schema 而非直接使用 zod
 
+### 2.3 Hook 系统 ✅
+- [x] 迁移并精简 hooks
+  - [x] 保留 anthropic-context-window-limit-recovery
+  - [x] 保留 autoslashcommand
+  - [x] 移除 sisyphus 等多 agent 编排相关 hooks
+  - [x] 移除 Claude Code 检测 hook
+  - [x] 移除模型特定逻辑 (gemini/claude)
 
+### 2.4 System Reminder 系统 ✅
+- [x] 创建独立的 system-reminder 模块
+  - [x] 设计统一触发机制
+  - [x] 实现 reminder 注册系统
+  - [x] bash 工具提醒
+    - [x] 失败/空返回时提醒 bash 版本
+    - [x] cp/mkdir 等命令操作提醒
+    - [x] 危险命令确认
+- [x] 在消息入队前注入
+- [x] 在工具执行后注入
 
-### 2.3 Hook 系统
-- [ ] 迁移并精简 hooks
-  - [ ] 保留 anthropic-context-window-limit-recovery
-  - [ ] 保留 autoslashcommand
-  - [ ] 移除 sisyphus 等多 agent 编排相关 hooks
-  - [ ] 移除 Claude Code 检测 hook
-  - [ ] 移除模型特定逻辑 (gemini/claude)
-
-### 2.4 System Reminder 系统
-- [ ] 创建独立的 system-reminder 模块 作为一个文件夹
-  - [ ] 所有的reminder进行机制切换
-  - [ ] 设计统一触发机制
-  - [ ] 实现 reminder 注册系统
-  - [ ] bash 工具提醒
-    - [ ] 失败/空返回时提醒 bash 版本
-    - [ ] cp/mkdir 等命令操作提醒
-    - [ ] 危险命令确认
-- [ ] 在消息入队前注入
-- [ ] 在工具执行后注入
-- [ ] clawcoder的systemreminder机制模仿
-  - 在ref下有claude code的源码，在ref/claude-code-analysis/src/utils/messages.ts 这个文件存在诸多的claude code中的system reminder的触发机制
-  - 仿照其reminder机制进行模仿，要求bt-omo插件里的clawcoder 拥有类似的reminder机制，如果实现不了的则不实现
-  - 至于默认的reminder机制（ 无论什么agent都有的） 你可以自行决定
+### 2.5 主入口整合 ✅
+- [x] 更新 src/index.ts
+  - [x] 整合所有 hooks
+  - [x] 整合所有 agents
+  - [x] 整合所有 tools
+- [x] 项目编译成功
 
 ## 第三阶段：高级功能
 
@@ -128,15 +128,11 @@
 ## 第四阶段：集成和测试
 
 ### 4.1 主入口
-- [ ] 创建 src/index.ts
-  - [ ] 整合所有 hooks
-  - [ ] 整合所有 agents
-  - [ ] 整合所有 tools
-  - [ ] 配置事件监听器
-- [ ] 创建 plugin-config.ts
+- [ ] 完善 plugin-config.ts
+- [ ] 添加更多配置选项
 
 ### 4.2 构建和打包
-- [ ] 配置构建脚本
+- [x] 配置构建脚本
 - [ ] 生成 schema.json
 - [ ] 测试构建产物
 
@@ -160,12 +156,22 @@
 ## 进度追踪
 
 - 开始时间: 2026-05-03
-- 当前阶段: 第二阶段 - 核心功能迁移
-- 完成百分比: 25%
+- 当前阶段: 第三阶段 - 高级功能
+- 完成百分比: 40%
 
 ## 已完成
 - ✅ 项目基础搭建
 - ✅ Agent 系统 (6个agents: explore, general, look-at, claude-code, clawcoder, autose)
+- ✅ Tool 系统 (delegate_task, slashcommand)
+- ✅ Hook 系统 (context recovery, auto slash command)
+- ✅ System Reminder 系统
+- ✅ 项目编译通过
+
+## 下一步任务
+1. TMUX 系统迁移
+2. 事件处理完善
+3. 并发控制迁移
+4. Background Manager 迁移
 
 ## 注意事项
 
@@ -175,3 +181,5 @@
 4. 类型必须从 types/opencode-plugin-type.ts 导入
 5. 保持代码可扩展性
 6. 优先完成核心逻辑
+7. session.create API 只接受 body (parentID, title) 和 query (directory)
+8. 使用 tool.schema 而非 zod 直接调用
