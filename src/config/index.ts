@@ -12,7 +12,6 @@ export {
   SkillsConfigSchema,
   SkillDefinitionSchema,
   HookNameSchema,
-  validateConfig,
 } from "./schema"
 
 export type {

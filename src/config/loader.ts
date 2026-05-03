@@ -3,7 +3,6 @@
  * Loads configuration from ~/.config/opencode/bt-omo.json
  */
 
-import { z } from "zod"
 import { readFileSync, existsSync } from "fs"
 import { homedir } from "os"
 import { join } from "path"
@@ -48,7 +47,11 @@ export function loadBtOmoConfig(projectDirectory?: string): BtOmoConfig {
  * Validate configuration
  */
 export function validateConfig(config: unknown): BtOmoConfig {
-  return BtOmoConfigSchema.parse(config)
+  const result = BtOmoConfigSchema.safeParse(config)
+  if (!result.success) {
+    throw new Error(`Invalid config: ${result.error.message}`)
+  }
+  return result.data
 }
 
 export { BtOmoConfigSchema } from "./schema"
