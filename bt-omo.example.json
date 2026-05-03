@@ -1,0 +1,33 @@
+{
+  "$schema": "./dist/schema.json",
+  "provider": "anthropic",
+  "default_model": "claude-3-5-sonnet-20241022",
+  "env": {
+    "ANTHROPIC_API_KEY": "your-api-key-here"
+  },
+  "tmux": {
+    "enabled": true,
+    "layout": "main-vertical",
+    "main_pane_size": 60
+  },
+  "background_task": {
+    "defaultConcurrency": 5,
+    "providerConcurrency": {
+      "anthropic": 3
+    },
+    "modelConcurrency": {
+      "claude-3-5-sonnet-20241022": 2
+    }
+  },
+  "agents": {
+    "explore": {
+      "model": "claude-3-5-sonnet-20241022",
+      "description": "Code exploration agent with read-only access"
+    },
+    "general": {
+      "model": "claude-3-5-sonnet-20241022",
+      "description": "General-purpose agent with full capabilities"
+    }
+  },
+  "disabled_hooks": []
+}
