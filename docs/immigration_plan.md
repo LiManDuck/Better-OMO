@@ -105,20 +105,21 @@
 - [x] 会话删除时清理资源
 - [x] 集成到主入口事件处理
 
-### 3.4 事件处理
-- [ ] session.error 事件处理
-  - [ ] 可恢复类型的会话恢复
-- [ ] message.updated 事件处理
-  - [ ] 更新 session agent 名称
-- [ ] session.deleted 事件处理
-  - [ ] 清空资源
-- [ ] session.created 事件处理
-  - [ ] 启动 tmux
-  - [ ] 记录父会话 ID
+### 3.4 事件处理 ✅
+- [x] session.error 事件处理
+  - [x] 可恢复类型的会话恢复
+- [x] message.updated 事件处理
+  - [x] 更新 session agent 名称
+- [x] session.deleted 事件处理
+  - [x] 清空资源
+- [x] session.created 事件处理
+  - [x] 启动 tmux
+  - [x] 记录父会话 ID
+- [x] 创建SessionEventHandler统一处理
 
-### 3.5 Slash 命令
-- [ ] 实现 /role 命令
-- [ ] 实现 /btw 命令
+### 3.5 Slash 命令 ✅
+- [x] 实现 /role 命令
+- [x] 实现 /btw 命令
 
 ### 3.6 Skill 和 MCP
 - [ ] 迁移 skill 系统保持不变
@@ -157,8 +158,8 @@
 ## 进度追踪
 
 - 开始时间: 2026-05-03
-- 当前阶段: 第三阶段 - 高级功能
-- 完成百分比: 50%
+- 当前阶段: 第四阶段 - 集成和测试
+- 完成百分比: 65%
 
 ## 已完成
 - ✅ 项目基础搭建
@@ -168,12 +169,14 @@
 - ✅ System Reminder 系统
 - ✅ TMUX 系统 (session manager, event handling)
 - ✅ 并发控制系统 (ConcurrencyManager with three-level granularity)
+- ✅ 事件处理系统 (SessionEventHandler with recovery logic)
+- ✅ Slash命令系统 (/role, /btw)
 - ✅ 项目编译通过
 
 ## 下一步任务
-1. Background Manager 迁移
-2. 事件处理完善
-3. Slash命令实现
+1. 完善plugin-config
+2. 生成schema.json
+3. 编写README和文档
 
 ## 注意事项
 
