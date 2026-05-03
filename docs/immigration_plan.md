@@ -5,49 +5,49 @@
 ## 第一阶段：项目基础搭建
 
 ### 1.1 项目初始化
-- [ ] 创建基础目录结构
-  - [ ] config/
-  - [ ] agent/
-  - [ ] tool/
-  - [ ] system-reminder/
-  - [ ] utils/
-  - [ ] constants/
-  - [ ] types/
-- [ ] 初始化 package.json
-- [ ] 配置 TypeScript (tsconfig.json)
-- [ ] 配置构建脚本
+- [x] 创建基础目录结构
+  - [x] config/
+  - [x] agent/
+  - [x] tool/
+  - [x] system-reminder/
+  - [x] utils/
+  - [x] constants/
+  - [x] types/
+- [x] 初始化 package.json
+- [x] 配置 TypeScript (tsconfig.json)
+- [x] 配置构建脚本
 
 ### 1.2 类型系统重构
-- [ ] 创建 types/opencode-plugin-type.ts
-  - [ ] 从 @opencode-ai/plugin 导出所有必要类型
-  - [ ] 定义统一的类型导出接口
-- [ ] 创建 constants/index.ts
-  - [ ] 整合所有 hook 名称常量
-  - [ ] 整合事件类型常量
-  - [ ] 整合消息类型常量
+- [x] 创建 types/opencode-plugin-type.ts
+  - [x] 从 @opencode-ai/plugin 导出所有必要类型
+  - [x] 定义统一的类型导出接口
+- [x] 创建 constants/index.ts
+  - [x] 整合所有 hook 名称常量
+  - [x] 整合事件类型常量
+  - [x] 整合消息类型常量
 
 ### 1.3 配置系统
-- [ ] 创建 config/schema.ts
-  - [ ] 定义 BtOmoConfig 接口
-  - [ ] 支持用户自定义配置字段
-- [ ] 实现配置加载逻辑
-- [ ] 支持从 ~/.config/opencode/bt-omo.json 读取配置
+- [x] 创建 config/schema.ts
+  - [x] 定义 BtOmoConfig 接口
+  - [x] 支持用户自定义配置字段
+- [x] 实现配置加载逻辑
+- [x] 支持从 ~/.config/opencode/bt-omo.json 读取配置
 
 ## 第二阶段：核心功能迁移
 
 ### 2.1 Agent 系统
-- [ ] 创建 agent/schema.ts
-  - [ ] 定义 agent 接口规范
-- [ ] 迁移 explore agent (只读权限)
-- [ ] 迁移 general agent (全能力)
-- [ ] 迁移 look-at agent (多模态)
-- [ ] 新增 claude-code agent
-  - [ ] 实现 CC 兼容的 system reminder
+- [x] 创建 agent/schema.ts
+  - [x] 定义 agent 接口规范
+- [x] 迁移 explore agent (只读权限)
+- [x] 迁移 general agent (全能力)
+- [x] 迁移 look-at agent (多模态)
+- [x] 新增 claude-code agent
+  - [x] 实现 CC 兼容的 system reminder
   - [ ] 实现 team 机制
   - [ ] 实现 memory 机制
-- [ ] 新增 clawcoder agent
-- [ ] 新增 autose agent
-- [ ] 主 agent 提示词设置 (临时: "you are bt-omo, a good code agent")
+- [x] 新增 clawcoder agent
+- [x] 新增 autose agent
+- [x] 主 agent 提示词设置 (临时: "you are bt-omo, a good code agent")
 
 ### 2.2 Tool 系统
 - [ ] 迁移 slashcommand 工具
@@ -153,8 +153,12 @@
 ## 进度追踪
 
 - 开始时间: 2026-05-03
-- 当前阶段: 第一阶段 - 项目基础搭建
-- 完成百分比: 0%
+- 当前阶段: 第二阶段 - 核心功能迁移
+- 完成百分比: 25%
+
+## 已完成
+- ✅ 项目基础搭建
+- ✅ Agent 系统 (6个agents: explore, general, look-at, claude-code, clawcoder, autose)
 
 ## 注意事项
 
