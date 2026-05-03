@@ -11,7 +11,9 @@ import { createSlashcommandTool } from "./tool/slashcommand"
 import { initializeBuiltinReminders } from "./system-reminder"
 import { discoverAgents } from "./agent"
 import { TmuxSessionManager } from "./utils/tmux"
+import { SessionEventHandler } from "./handlers/session-events"
 import type { TmuxConfig } from "./config/schema"
+import { DEFAULTS } from "./constants"
 
 /**
  * Better-OMO Plugin
@@ -36,37 +38,29 @@ const BetterOmoPlugin: Plugin = async (ctx: PluginInput) => {
 
   // Initialize TMUX manager
   const tmuxConfig: TmuxConfig = config.tmux ?? {
-    enabled: false,
-    layout: "main-vertical",
-    main_pane_size: 60,
+    enabled: DEFAULTS.TMUX_ENABLED,
+    layout: DEFAULTS.TMUX_LAYOUT,
+    main_pane_size: DEFAULTS.TMUX_MAIN_PANE_SIZE,
   }
   const tmuxManager = new TmuxSessionManager(ctx, tmuxConfig)
   console.log(`[Better-OMO] TMUX manager initialized (enabled: ${tmuxConfig.enabled})`)
 
+  // Initialize session event handler
+  const sessionEventHandler = new SessionEventHandler(ctx, tmuxManager)
+  console.log("[Better-OMO] Session event handler initialized")
+
   // Build hooks
   const baseHooks = createHooks(ctx, disabledHooks)
 
-  // Build event hook with TMUX integration
+  // Build event hook with integrated handling
   const eventHook: Hooks["event"] = async ({ event }: { event: Event }) => {
     // Call base event hooks first
     if (baseHooks.event) {
       await baseHooks.event({ event })
     }
 
-    // Handle TMUX-related events
-    if (event.type === "session.created") {
-      const properties = (event as any).properties
-      await tmuxManager.onSessionCreated({
-        sessionID: properties.sessionID,
-        parentID: properties.parentID,
-        title: properties.title || "New Session",
-      })
-    } else if (event.type === "session.deleted") {
-      const properties = (event as any).properties
-      await tmuxManager.onSessionDeleted({
-        sessionID: properties.sessionID,
-      })
-    }
+    // Handle session events with dedicated handler
+    await sessionEventHandler.handleEvent(event)
   }
 
   // Build tools

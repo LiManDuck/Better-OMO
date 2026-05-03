@@ -113,3 +113,6 @@ export const DEFAULTS = {
   TMUX_LAYOUT: "main-vertical",
   TMUX_MAIN_PANE_SIZE: 60,
 } as const
+
+// Export event constants
+export * from "./event"
