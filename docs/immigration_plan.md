@@ -97,12 +97,13 @@
 ### 3.2 Background Manager
 - [ ] 迁移 background manager 系统
 
-### 3.3 TMUX 系统
-- [ ] 创建 utils/tmux-manager.ts
-  - [ ] 合并 src/features/tmux-subagent/manager.ts
-  - [ ] 合并 shared/tmux 内容
-- [ ] 会话创建时启动 tmux
-- [ ] 会话删除时清理资源
+### 3.3 TMUX 系统 ✅
+- [x] 创建 utils/tmux-manager.ts
+  - [x] 合并 src/features/tmux-subagent/manager.ts
+  - [x] 合并 shared/tmux 内容
+- [x] 会话创建时启动 tmux
+- [x] 会话删除时清理资源
+- [x] 集成到主入口事件处理
 
 ### 3.4 事件处理
 - [ ] session.error 事件处理
@@ -165,13 +166,14 @@
 - ✅ Tool 系统 (delegate_task, slashcommand)
 - ✅ Hook 系统 (context recovery, auto slash command)
 - ✅ System Reminder 系统
+- ✅ TMUX 系统 (session manager, event handling)
 - ✅ 项目编译通过
 
 ## 下一步任务
-1. TMUX 系统迁移
-2. 事件处理完善
-3. 并发控制迁移
-4. Background Manager 迁移
+1. 并发控制迁移
+2. Background Manager 迁移
+3. 事件处理完善
+4. Slash命令实现
 
 ## 注意事项
 
