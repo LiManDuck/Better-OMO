@@ -4,7 +4,6 @@
 
 import type { Plugin, Hooks, PluginInput } from "@opencode-ai/plugin"
 import { loadPluginConfig } from "./plugin-config"
-import { createBuiltinAgents } from "./agent"
 import { HOOK_NAMES } from "./constants"
 
 /**
@@ -22,12 +21,6 @@ const BetterOmoPlugin: Plugin = async (ctx: PluginInput) => {
 
   // Check if hook is enabled
   const isHookEnabled = (hookName: string) => !disabledHooks.has(hookName as any)
-
-  // Get default model
-  const defaultModel = config.default_model ?? "anthropic/claude-sonnet-4-6"
-
-  // Create built-in agents
-  const _agents = createBuiltinAgents(defaultModel)
 
   // Build hooks
   const hooks: Hooks = {}
