@@ -61,6 +61,8 @@
   - [ ] 路径检测
   - [ ] shellEscape 功能
 
+
+
 ### 2.3 Hook 系统
 - [ ] 迁移并精简 hooks
   - [ ] 保留 anthropic-context-window-limit-recovery
@@ -80,6 +82,10 @@
     - [ ] 危险命令确认
 - [ ] 在消息入队前注入
 - [ ] 在工具执行后注入
+- [ ] clawcoder的systemreminder机制模仿
+  - 在ref下有claude code的源码，在ref/claude-code-analysis/src/utils/messages.ts 这个文件存在诸多的claude code中的system reminder的触发机制
+  - 仿照其reminder机制进行模仿，要求bt-omo插件里的clawcoder 拥有类似的reminder机制，如果实现不了的则不实现
+  - 至于默认的reminder机制（ 无论什么agent都有的） 你可以自行决定
 
 ## 第三阶段：高级功能
 

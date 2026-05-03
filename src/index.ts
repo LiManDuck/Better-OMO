@@ -2,9 +2,13 @@
  * Better-OMO Plugin Entry Point
  */
 
-import type { Plugin, Hooks, PluginInput } from "@opencode-ai/plugin"
+import type { Plugin, PluginInput } from "@opencode-ai/plugin"
 import { loadPluginConfig } from "./plugin-config"
-import { HOOK_NAMES } from "./constants"
+import { createHooks } from "./hooks"
+import { createDelegateTask } from "./tool/delegate-task"
+import { createSlashcommandTool } from "./tool/slashcommand"
+import { initializeBuiltinReminders } from "./system-reminder"
+import { discoverAgents } from "./agent"
 
 /**
  * Better-OMO Plugin
@@ -15,77 +19,34 @@ import { HOOK_NAMES } from "./constants"
 const BetterOmoPlugin: Plugin = async (ctx: PluginInput) => {
   console.log("[Better-OMO] Plugin loading...", { directory: ctx.directory })
 
+  // Initialize system reminders
+  await initializeBuiltinReminders()
+  console.log("[Better-OMO] System reminders initialized")
+
   // Load configuration
   const config = loadPluginConfig(ctx.directory)
   const disabledHooks = new Set(config.disabled_hooks ?? [])
 
-  // Check if hook is enabled
-  const isHookEnabled = (hookName: string) => !disabledHooks.has(hookName as any)
+  // Discover agents
+  const agents = await discoverAgents()
+  console.log(`[Better-OMO] Discovered ${agents.length} agents`)
 
   // Build hooks
-  const hooks: Hooks = {}
+  const hooks = createHooks(ctx, disabledHooks)
 
-  // Event hook
-  if (isHookEnabled("event")) {
-    hooks.event = async ({ event }) => {
-      console.log("[Better-OMO] Event:", event.type)
-
-      // Handle specific events
-      if (event.type === "session.created") {
-        console.log("[Better-OMO] Session created")
-      } else if (event.type === "session.deleted") {
-        console.log("[Better-OMO] Session deleted")
-      } else if (event.type === "session.error") {
-        console.log("[Better-OMO] Session error")
-      } else if (event.type === "message.updated") {
-        console.log("[Better-OMO] Message updated")
-      }
-    }
-  }
-
-  // Config hook
-  if (isHookEnabled("config")) {
-    hooks.config = async () => {
-      console.log("[Better-OMO] Config hook called")
-      // Inject configuration into the system
-    }
-  }
-
-  // Chat message hook
-  if (isHookEnabled(HOOK_NAMES.CHAT_MESSAGE)) {
-    hooks[HOOK_NAMES.CHAT_MESSAGE] = async (input) => {
-      console.log("[Better-OMO] Chat message:", input.sessionID)
-      // Process incoming messages
-    }
-  }
-
-  // Tool execute before hook
-  if (isHookEnabled(HOOK_NAMES.TOOL_EXECUTE_BEFORE)) {
-    hooks[HOOK_NAMES.TOOL_EXECUTE_BEFORE] = async (input) => {
-      console.log("[Better-OMO] Tool executing:", input.tool)
-      // Pre-process tool execution
-    }
-  }
-
-  // Tool execute after hook
-  if (isHookEnabled(HOOK_NAMES.TOOL_EXECUTE_AFTER)) {
-    hooks[HOOK_NAMES.TOOL_EXECUTE_AFTER] = async (input) => {
-      console.log("[Better-OMO] Tool executed:", input.tool)
-      // Post-process tool execution
-    }
-  }
-
-  // Experimental chat messages transform
-  if (isHookEnabled(HOOK_NAMES.EXPERIMENTAL_CHAT_MESSAGES_TRANSFORM)) {
-    hooks[HOOK_NAMES.EXPERIMENTAL_CHAT_MESSAGES_TRANSFORM] = async () => {
-      console.log("[Better-OMO] Transforming messages")
-      // Transform messages before sending to LLM
-    }
-  }
+  // Build tools
+  const tools = [
+    createDelegateTask(ctx.client),
+    createSlashcommandTool(),
+  ]
 
   console.log("[Better-OMO] Plugin loaded successfully")
 
-  return hooks
+  return {
+    ...hooks,
+    agents,
+    tools,
+  }
 }
 
 export default BetterOmoPlugin
